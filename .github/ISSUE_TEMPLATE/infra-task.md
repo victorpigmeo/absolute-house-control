@@ -6,7 +6,9 @@ labels: area:infra
 ---
 
 ## Description
-<!-- Max 1000 characters. What needs to be built/changed and why. -->
+<!-- The entire issue body (Description + Implementation Steps + Branch
+     combined) must be 1000 characters or fewer — not just this section.
+     What needs to be built/changed and why. -->
 
 
 
