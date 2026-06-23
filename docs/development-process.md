@@ -49,12 +49,34 @@ Required fields:
   analysis/lint check to pass. **Infra tasks do not require acceptance
   criteria** and the infra template omits this section entirely.
 
-When filing a task, add it to the matching project, e.g.:
+When filing a task interactively, `--template` pre-fills the editor:
 
 ```
 gh issue create -R victorpigmeo/absolute-house-control \
   --template "Backend task" \
+  -l area:backend \
+  -p "absolute-house-control — Backend"
+```
+
+`--template` only works interactively (it needs a TTY to open the editor).
+For scripted/non-interactive creation (e.g. by an agent), skip `--template`
+and pass the full body matching the template structure directly:
+
+```
+gh issue create -R victorpigmeo/absolute-house-control \
   --title "[Backend] <summary>" \
+  --body "$(cat <<'EOF'
+## Description
+...
+
+## Implementation Steps
+1. ...
+
+## Acceptance Criteria
+- [ ] The project's automated tests pass, including a new/updated test that exercises <behavior>.
+- [ ] The project's static analysis/lint check passes with no new violations.
+EOF
+)" \
   -l area:backend \
   -p "absolute-house-control — Backend"
 ```
