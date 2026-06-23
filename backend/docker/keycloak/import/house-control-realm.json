@@ -1,0 +1,16 @@
+{
+  "realm": "house-control",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "greenhouse",
+      "protocol": "openid-connect",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "greenhouse-dev-secret",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": true
+    }
+  ]
+}

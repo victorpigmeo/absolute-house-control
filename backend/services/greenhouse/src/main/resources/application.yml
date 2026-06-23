@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: greenhouse
+  datasource:
+    url: jdbc:postgresql://localhost:5432/house_control
+    username: greenhouse_app
+    password: ${GREENHOUSE_DB_PASSWORD:greenhouse_app}
+  flyway:
+    schemas: greenhouse
+    default-schema: greenhouse
+    create-schemas: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/house-control}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+server:
+  port: 8081
