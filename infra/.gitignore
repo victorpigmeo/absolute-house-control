@@ -1,0 +1,12 @@
+# Talos / kubeconfig artifacts - never commit, regenerate from source
+talosconfig
+kubeconfig
+*.kubeconfig
+
+# Generated machine configs (contain embedded certs/keys)
+controlplane.yaml
+worker.yaml
+
+.idea/
+.vscode/
+.DS_Store
