@@ -4,8 +4,9 @@
 
 This repo is spec-only today (see [spec/](../spec/)). This document defines
 the *process* by which future implementation work is tracked, branched,
-tested, and merged — it does **not** choose backend/frontend testing or
-static-analysis tooling; those remain open decisions (see
+tested, and merged — it does not itself choose testing/static-analysis
+tooling. Backend tooling is chosen (see [spec/backend-spec.md](../spec/backend-spec.md));
+frontend tooling remains an open decision (see
 [Open items / deferred decisions](#open-items--deferred-decisions)).
 
 Work is split into three independent areas, matching the repo structure:
@@ -155,8 +156,6 @@ be phrased like:
 
 ## Open items / deferred decisions
 
-- Backend test framework — TBD.
-- Backend static analysis tool — TBD.
 - Frontend test framework — TBD.
 - Frontend lint tool — TBD (Next.js ships ESLint by default, but
   selection/config is still an open decision per [spec/frontend-spec.md](../spec/frontend-spec.md)).
