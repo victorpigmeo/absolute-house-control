@@ -116,14 +116,19 @@ project's test/lint commands run differ.
    frontend tests for frontend tasks).
 5. Run that area's static analysis/lint check.
 6. Confirm every Acceptance Criterion in the issue is actually met.
-7. Commit, referencing the issue (e.g. `Refs #<n>` or `Closes #<n>`).
-8. Push the branch and open a PR targeting `master`:
+7. Before committing, run a code-review sub-agent over the working diff
+   (e.g. the `/code-review` skill, or an equivalent review subagent).
+   Display its findings, ordered from most to least critical. Ask the user
+   whether to continue (commit as-is) or address the issues first — do not
+   commit until they respond.
+8. Commit, referencing the issue (e.g. `Refs #<n>` or `Closes #<n>`).
+9. Push the branch and open a PR targeting `master`:
    ```
    gh pr create -R victorpigmeo/absolute-house-control \
      --base master --head <branch> \
      --title "..." --body "Closes #<n>\n\n..."
    ```
-9. Move the Project item to `Done` only after the PR is merged.
+10. Move the Project item to `Done` only after the PR is merged.
 
 ### Infra tasks
 
