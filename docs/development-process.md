@@ -41,8 +41,10 @@ Every task is a GitHub Issue, filed using the template for its area:
 
 Required fields:
 
-- **Description** — max 1000 characters. Enforced by convention/comment
-  only; classic Markdown issue templates have no native length validation.
+- **Description** — the whole issue body (Description + Implementation
+  Steps + Acceptance Criteria + Branch combined) must be 1000 characters or
+  fewer. Enforced by convention/comment only; classic Markdown issue
+  templates have no native length validation.
 - **Implementation Steps** — a numbered, step-by-step plan for the change.
 - **Acceptance Criteria** — **backend and frontend tasks only**. Must
   include at least one criterion requiring an automated test exercising the
