@@ -44,12 +44,25 @@ is a dev-only placeholder — never reuse it anywhere near production.
 ```
 
 Serves on `localhost:8081`. Requires `docker compose up -d` to already be
-running (Postgres + Keycloak). Override local defaults with env vars
+running (Postgres + Keycloak).
+
+The service has two Spring profiles, `local` and `prod`. `local` is the
+default — with no `SPRING_PROFILES_ACTIVE` set, `bootRun` and plain test
+runs behave exactly as before. Override local defaults with env vars
 `GREENHOUSE_DB_PASSWORD`, `KEYCLOAK_ISSUER_URI`, and `ESP32_BASE_URL` if
 needed. `ESP32_BASE_URL` defaults to `http://192.168.18.26`, the greenhouse
 ESP32 board's LAN address (see [spec/backend-spec.md](../spec/backend-spec.md))
 — unreachable from most dev sandboxes, so actuator endpoints can only be
-exercised against the real board from a machine on that LAN.
+exercised against the real board from a machine on that LAN. This default
+is the same in every profile, since it's the one physical board on the
+one home LAN, not an environment-specific value.
+
+`prod` (`SPRING_PROFILES_ACTIVE=prod`) has **no defaults** for
+`GREENHOUSE_DB_URL`, `GREENHOUSE_DB_PASSWORD`, or `KEYCLOAK_ISSUER_URI` —
+all three must be supplied (e.g. via Kubernetes ConfigMap/Secret-mounted
+env vars), or the application fails fast at startup with a "could not
+resolve placeholder" error rather than silently falling back to a
+local-dev credential.
 
 ## Known sandbox limitation (as of this PR)
 
