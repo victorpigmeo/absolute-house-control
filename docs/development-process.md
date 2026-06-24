@@ -166,8 +166,12 @@ be phrased like:
 
 - Frontend lint tool — TBD (Next.js ships ESLint by default, but
   selection/config is still an open decision per [spec/frontend-spec.md](../spec/frontend-spec.md)).
-- CI automation (e.g. GitHub Actions running tests/lint on PRs) — not
-  addressed by this process yet; a natural follow-up once tooling above is
-  chosen.
 - Custom Project fields beyond the default `Status` — intentionally
   deferred; keep setup minimal until a need arises.
+- Required-status-checks branch protection for the backend/frontend CI
+  workflows — deliberately not enabled yet; a follow-up once they've run
+  cleanly on a few PRs.
+- Infra build-out (provisioning the Talos cluster, FluxCD bootstrap, etc.)
+  — deferred until the greenhouse backend module is finished, or until
+  explicitly requested; CI accordingly only covers backend and frontend
+  for now.
