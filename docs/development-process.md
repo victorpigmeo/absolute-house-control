@@ -108,12 +108,21 @@ the branch name.
 
 ## Implementation workflow per task type
 
+> **IMPORTANT — move to `In Progress` first:** Before doing anything else on
+> a task — including exploratory research or writing a plan — move its
+> GitHub Project item to `In Progress`. This is the very first action, not
+> a step that happens incidentally before the PR. It applies to backend,
+> frontend, and infra tasks alike. If something blocks write actions (e.g.
+> plan mode is active), the move is still the first thing queued to execute
+> once unblocked, ahead of or alongside the rest of the work.
+
 ### Backend / frontend tasks
 
 Mechanics are identical between the two; only the branch prefix and which
 project's test/lint commands run differ.
 
-1. Pick up an issue from the relevant Project, move it to `In Progress`.
+1. Pick up an issue from the relevant Project, move it to `In Progress`
+   (before any planning or other work — see callout above).
 2. Branch per [Branching](#branching) above.
 3. Implement the change per the issue's Implementation Steps.
 4. Run that area's automated tests (backend tests for backend tasks,
@@ -136,11 +145,12 @@ project's test/lint commands run differ.
 
 ### Infra tasks
 
-Same checkout → branch → implement → commit → PR mechanics, with branch
-prefix `infra/<task-id>`. Infra tasks have **no test-run gate and no
-acceptance criteria** — any manual verification (e.g. `helm lint`,
-`kubectl apply --dry-run`) belongs in the issue's Implementation Steps, not
-as a formal gate.
+Same first step as above — move the Project item to `In Progress` before
+any planning or other work — then the same checkout → branch → implement →
+commit → PR mechanics, with branch prefix `infra/<task-id>`. Infra tasks
+have **no test-run gate and no acceptance criteria** — any manual
+verification (e.g. `helm lint`, `kubectl apply --dry-run`) belongs in the
+issue's Implementation Steps, not as a formal gate.
 
 ## Testing gate
 

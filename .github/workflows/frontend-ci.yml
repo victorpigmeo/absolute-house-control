@@ -3,9 +3,6 @@ name: Frontend CI
 on:
   pull_request:
     branches: [master]
-    paths:
-      - "frontend/**"
-      - ".github/workflows/frontend-ci.yml"
 
 permissions:
   contents: read
@@ -25,7 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for frontend changes
+        id: changes
+        working-directory: .
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.event.pull_request.base.ref }}"
+          if git diff --name-only "origin/${{ github.event.pull_request.base.ref }}" HEAD | grep -qE '^(frontend/|\.github/workflows/frontend-ci\.yml)'; then
+            echo "frontend=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "frontend=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Node
+        if: steps.changes.outputs.frontend == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: frontend/.nvmrc
@@ -33,19 +42,30 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
+        if: steps.changes.outputs.frontend == 'true'
         run: npm ci
 
       - name: Install Playwright browsers
+        if: steps.changes.outputs.frontend == 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Lint
+        if: steps.changes.outputs.frontend == 'true'
         run: npm run lint
 
       - name: Unit tests
+        if: steps.changes.outputs.frontend == 'true'
         run: npm run test
 
       - name: Build
+        if: steps.changes.outputs.frontend == 'true'
         run: npm run build
 
       - name: E2E tests
+        if: steps.changes.outputs.frontend == 'true'
         run: npm run test:e2e
+
+      - name: No frontend changes
+        if: steps.changes.outputs.frontend == 'false'
+        working-directory: .
+        run: echo "No frontend changes in this PR; skipping build."
