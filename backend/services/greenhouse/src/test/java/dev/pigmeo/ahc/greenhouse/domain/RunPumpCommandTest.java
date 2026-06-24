@@ -9,9 +9,9 @@ class RunPumpCommandTest {
 
   @Test
   void constructor_withPositiveDuration_succeeds() {
-    RunPumpCommand command = new RunPumpCommand(30);
+    RunPumpCommand command = new RunPumpCommand(5);
 
-    assertThat(command.durationSeconds()).isEqualTo(30);
+    assertThat(command.durationSeconds()).isEqualTo(5);
   }
 
   @Test

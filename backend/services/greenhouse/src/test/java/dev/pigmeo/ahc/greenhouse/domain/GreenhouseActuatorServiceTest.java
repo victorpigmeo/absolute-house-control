@@ -74,15 +74,15 @@ class GreenhouseActuatorServiceTest {
         new GreenhouseActuatorService(esp32GpioClient, taskScheduler);
     Instant before = Instant.now();
 
-    int result = service.runPump(new RunPumpCommand(45));
+    int result = service.runPump(new RunPumpCommand(5));
 
     verify(esp32GpioClient).setPump(true);
     ArgumentCaptor<Instant> instantCaptor = ArgumentCaptor.forClass(Instant.class);
     verify(taskScheduler).schedule(any(Runnable.class), instantCaptor.capture());
     Instant scheduledAt = instantCaptor.getValue();
-    assertThat(scheduledAt).isAfterOrEqualTo(before.plusSeconds(45).minusSeconds(2));
-    assertThat(scheduledAt).isBeforeOrEqualTo(Instant.now().plusSeconds(45).plusSeconds(2));
-    assertThat(result).isEqualTo(45);
+    assertThat(scheduledAt).isAfterOrEqualTo(before.plusSeconds(5).minusSeconds(2));
+    assertThat(scheduledAt).isBeforeOrEqualTo(Instant.now().plusSeconds(5).plusSeconds(2));
+    assertThat(result).isEqualTo(5);
   }
 
   @Test
@@ -90,7 +90,7 @@ class GreenhouseActuatorServiceTest {
     GreenhouseActuatorService service =
         new GreenhouseActuatorService(esp32GpioClient, taskScheduler);
 
-    service.runPump(new RunPumpCommand(45));
+    service.runPump(new RunPumpCommand(5));
 
     ArgumentCaptor<Runnable> runnableCaptor = ArgumentCaptor.forClass(Runnable.class);
     verify(taskScheduler).schedule(runnableCaptor.capture(), any(Instant.class));
@@ -111,8 +111,8 @@ class GreenhouseActuatorServiceTest {
     when(taskScheduler.schedule(any(Runnable.class), any(Instant.class)))
         .thenReturn(firstFuture, secondFuture);
 
-    service.runPump(new RunPumpCommand(30));
-    service.runPump(new RunPumpCommand(60));
+    service.runPump(new RunPumpCommand(5));
+    service.runPump(new RunPumpCommand(7));
 
     verify(firstFuture).cancel(false);
     verify(secondFuture, never()).cancel(anyBoolean());

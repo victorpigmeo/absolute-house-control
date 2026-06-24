@@ -2,7 +2,7 @@ package dev.pigmeo.ahc.greenhouse.domain;
 
 public record RunPumpCommand(int durationSeconds) {
 
-  public static final int MAX_DURATION_SECONDS = 3600;
+  public static final int MAX_DURATION_SECONDS = 10;
 
   public RunPumpCommand {
     if (durationSeconds <= 0) {

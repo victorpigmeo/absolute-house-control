@@ -143,9 +143,9 @@ class GreenhouseActuatorControllerTest {
             post("/api/greenhouse/pump")
                 .with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"durationSeconds\": 30}"))
+                .content("{\"durationSeconds\": 5}"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.durationSeconds").value(30));
+        .andExpect(jsonPath("$.durationSeconds").value(5));
 
     wireMock.verify(getRequestedFor(urlEqualTo("/api/gpio/set/25/0")));
     wireMock.verify(0, getRequestedFor(urlEqualTo("/api/gpio/set/25/1")));
@@ -228,7 +228,7 @@ class GreenhouseActuatorControllerTest {
         .perform(
             post("/api/greenhouse/pump")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"durationSeconds\": 30}"))
+                .content("{\"durationSeconds\": 5}"))
         .andExpect(status().isUnauthorized());
 
     wireMock.verify(0, getRequestedFor(urlMatching("/api/gpio/set/25/.*")));
