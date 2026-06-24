@@ -112,9 +112,13 @@ the branch name.
 > a task — including exploratory research or writing a plan — move its
 > GitHub Project item to `In Progress`. This is the very first action, not
 > a step that happens incidentally before the PR. It applies to backend,
-> frontend, and infra tasks alike. If something blocks write actions (e.g.
-> plan mode is active), the move is still the first thing queued to execute
-> once unblocked, ahead of or alongside the rest of the work.
+> frontend, and infra tasks alike.
+>
+> - If plan mode is already active when picking up the task: exit plan
+>   mode, move the Project item to `In Progress`, then re-enter plan mode
+>   to plan the task.
+> - If plan mode is not active: move the Project item to `In Progress`
+>   first, then enter plan mode to plan the task.
 
 ### Backend / frontend tasks
 
@@ -129,8 +133,9 @@ project's test/lint commands run differ.
    frontend tests for frontend tasks).
 5. Run that area's static analysis/lint check.
 6. Confirm every Acceptance Criterion in the issue is actually met.
-7. Before committing, run a code-review sub-agent over the working diff
-   (e.g. the `/code-review` skill, or an equivalent review subagent).
+7. Before committing, run exactly one code-review sub-agent over the
+   working diff, scoped to correctness bugs and possible runtime problems
+   only — not style, reuse, simplification, efficiency, or other cleanup.
    Display its findings, ordered from most to least critical. Ask the user
    whether to continue (commit as-is) or address the issues first — do not
    commit until they respond.
