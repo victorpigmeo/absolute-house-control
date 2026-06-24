@@ -179,8 +179,12 @@ be phrased like:
 - Custom Project fields beyond the default `Status` — intentionally
   deferred; keep setup minimal until a need arises.
 - Required-status-checks branch protection for the backend/frontend CI
-  workflows — deliberately not enabled yet; a follow-up once they've run
-  cleanly on a few PRs.
+  workflows — enabled (a repo ruleset on `master` requires both
+  `Build, lint, and test (backend)` and `Lint, test, build, and e2e
+  (frontend)`). Both workflows trigger on every PR but skip their
+  build/test steps unless the changed paths are relevant, specifically so
+  this doesn't block PRs that don't touch backend/frontend code (e.g.
+  docs-only) — see the change-detection step in each workflow file.
 - Infra build-out (provisioning the Talos cluster, FluxCD bootstrap, etc.)
   — deferred until the greenhouse backend module is finished, or until
   explicitly requested; CI accordingly only covers backend and frontend
