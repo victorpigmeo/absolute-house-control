@@ -3,9 +3,6 @@ name: Backend CI
 on:
   pull_request:
     branches: [master]
-    paths:
-      - "backend/**"
-      - ".github/workflows/backend-ci.yml"
 
 permissions:
   contents: read
@@ -25,7 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for backend changes
+        id: changes
+        working-directory: .
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.event.pull_request.base.ref }}"
+          if git diff --name-only "origin/${{ github.event.pull_request.base.ref }}" HEAD | grep -qE '^(backend/|\.github/workflows/backend-ci\.yml)'; then
+            echo "backend=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "backend=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up JDK
+        if: steps.changes.outputs.backend == 'true'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -33,7 +42,14 @@ jobs:
           cache: gradle
 
       - name: Build, format check, static analysis, unit/slice tests
+        if: steps.changes.outputs.backend == 'true'
         run: ./gradlew build --no-daemon
 
       - name: Integration tests (Testcontainers)
+        if: steps.changes.outputs.backend == 'true'
         run: ./gradlew integrationTest --no-daemon
+
+      - name: No backend changes
+        if: steps.changes.outputs.backend == 'false'
+        working-directory: .
+        run: echo "No backend changes in this PR; skipping build."
