@@ -17,6 +17,15 @@ Each folder uses only its own native tooling (Gradle / npm or pnpm / kubectl-Hel
 
 Read the relevant spec file before writing code in a folder.
 
+## Requirements
+
+Product requirements and user stories (goal, functional requirements,
+acceptance criteria, user stories) are tracked in
+[requirements/](requirements/), one folder per requirement, following
+[docs/requirements-process.md](docs/requirements-process.md). A requirement
+can span more than one area, so this is independent of the per-area
+GitHub Projects below.
+
 ## Development process
 
 Tasks are tracked in per-area GitHub Projects and follow a branch/PR
