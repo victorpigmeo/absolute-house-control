@@ -17,6 +17,11 @@ spring-boot = "4.1.0"
 # to mirror exactly what spring-boot-dependencies:4.1.0 specifies, to avoid version skew.
 testcontainers = "2.0.5"
 
+# Not managed by Spring Boot's BOM (not a Spring project) -- pinned here following the same
+# convention as spotless/google-java-format/errorprone above. 3.13.x is the latest stable line;
+# the 4.0.0-beta line is excluded as non-GA.
+wiremock = "3.13.2"
+
 [libraries]
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone-core" }
 

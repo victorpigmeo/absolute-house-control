@@ -15,6 +15,14 @@ spring:
         jwt:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/house-control}
 
+greenhouse:
+  esp32:
+    base-url: ${ESP32_BASE_URL:http://192.168.18.26}
+    pins:
+      led: 32
+      fan: 26
+      pump: 25
+
 management:
   endpoints:
     web:
