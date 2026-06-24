@@ -45,7 +45,11 @@ is a dev-only placeholder — never reuse it anywhere near production.
 
 Serves on `localhost:8081`. Requires `docker compose up -d` to already be
 running (Postgres + Keycloak). Override local defaults with env vars
-`GREENHOUSE_DB_PASSWORD` and `KEYCLOAK_ISSUER_URI` if needed.
+`GREENHOUSE_DB_PASSWORD`, `KEYCLOAK_ISSUER_URI`, and `ESP32_BASE_URL` if
+needed. `ESP32_BASE_URL` defaults to `http://192.168.18.26`, the greenhouse
+ESP32 board's LAN address (see [spec/backend-spec.md](../spec/backend-spec.md))
+— unreachable from most dev sandboxes, so actuator endpoints can only be
+exercised against the real board from a machine on that LAN.
 
 ## Known sandbox limitation (as of this PR)
 
