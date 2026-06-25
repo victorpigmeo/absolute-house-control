@@ -27,7 +27,6 @@ class GreenhouseFlywayIntegrationTest {
     registry.add("spring.datasource.url", postgres::getJdbcUrl);
     registry.add("spring.datasource.username", postgres::getUsername);
     registry.add("spring.datasource.password", postgres::getPassword);
-    registry.add("spring.flyway.create-schemas", () -> "true");
     registry.add(
         "spring.security.oauth2.resourceserver.jwt.issuer-uri",
         () -> "https://example-test-issuer.invalid/realms/house-control");

@@ -20,14 +20,14 @@ class GreenhouseProfileConfigTest {
           Environment environment = context.getEnvironment();
           assertThat(environment.getActiveProfiles()).isEmpty();
           assertThat(environment.getProperty("spring.datasource.url"))
-              .isEqualTo("jdbc:postgresql://db:5432/house_control");
+              .isEqualTo("jdbc:postgresql://db:5432/absolute_house_control");
           assertThat(environment.getProperty("spring.datasource.password"))
-              .isEqualTo("greenhouse_app");
+              .isEqualTo("sa_absolute_house_control");
           assertThat(environment.getProperty("spring.datasource.username"))
-              .isEqualTo("greenhouse_app");
+              .isEqualTo("sa_absolute_house_control");
           assertThat(
                   environment.getProperty("spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-              .isEqualTo("http://keycloak:8080/realms/house-control");
+              .isEqualTo("http://keycloak:8080/realms/absolute-house-control");
         });
   }
 
@@ -39,11 +39,11 @@ class GreenhouseProfileConfigTest {
             context -> {
               Environment environment = context.getEnvironment();
               assertThat(environment.getProperty("spring.datasource.url"))
-                  .isEqualTo("jdbc:postgresql://db:5432/house_control");
+                  .isEqualTo("jdbc:postgresql://db:5432/absolute_house_control");
               assertThat(
                       environment.getProperty(
                           "spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-                  .isEqualTo("http://keycloak:8080/realms/house-control");
+                  .isEqualTo("http://keycloak:8080/realms/absolute-house-control");
             });
   }
 
@@ -112,7 +112,7 @@ class GreenhouseProfileConfigTest {
                           "spring.security.oauth2.resourceserver.jwt.issuer-uri"))
                   .isEqualTo("https://auth.example.invalid/realms/house-control");
               assertThat(environment.getProperty("spring.datasource.username"))
-                  .isEqualTo("greenhouse_app");
+                  .isEqualTo("sa_absolute_house_control");
             });
   }
 }

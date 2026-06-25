@@ -15,20 +15,27 @@
 docker compose up -d
 ```
 
-Brings up Postgres (service name `db`, with the `greenhouse` schema and a
-least-privilege `greenhouse_app` role pre-created) and Keycloak (service
-name `keycloak`, with the `house-control` realm and `greenhouse` client
-pre-imported). Both service names double as their DNS hostnames for
-anything sharing the compose network (e.g. a devcontainer attached to it) —
-the `local` Spring profile connects to `db:5432`/`keycloak:8080` directly
-rather than via published `localhost` ports. Postgres has a `pg_isready`
-healthcheck; Keycloak has none (its health-endpoint setup is
-version-specific and wasn't verified in this environment), so it may take
-a few seconds after start before `--import-realm` finishes and it accepts
-connections.
+Brings up Postgres (service name `db`, with a least-privilege
+`sa_absolute_house_control` role pre-created — the `greenhouse` schema
+itself is created by Flyway on first run, not by this script) and Keycloak
+(service name `keycloak`, with the `absolute-house-control` realm and
+`greenhouse` client pre-imported). Both service names double as their DNS
+hostnames for anything sharing the compose network (e.g. a devcontainer
+attached to it) — the `local` Spring profile connects to
+`db:5432`/`keycloak:8080` directly rather than via published `localhost`
+ports. Postgres has a `pg_isready` healthcheck; Keycloak has none (its
+health-endpoint setup is version-specific and wasn't verified in this
+environment), so it may take a few seconds after start before
+`--import-realm` finishes and it accepts connections.
 
-The `greenhouse` client's secret in `docker/keycloak/import/house-control-realm.json`
-is a dev-only placeholder — never reuse it anywhere near production.
+If you have an existing `postgres-data` volume from before the database
+was renamed to `absolute_house_control`, recreate it (`docker compose down
+-v`) — `POSTGRES_DB` only takes effect when Postgres initializes a fresh,
+empty data directory.
+
+The `greenhouse` client's secret in
+`docker/keycloak/import/absolute-house-control-realm.json` is a dev-only
+placeholder — never reuse it anywhere near production.
 
 ## Building and testing
 
@@ -53,8 +60,9 @@ running (Postgres + Keycloak).
 The service has two Spring profiles, `local` and `prod`. `local` is the
 default — with no `SPRING_PROFILES_ACTIVE` set, `bootRun` and plain test
 runs behave exactly as before. Override local defaults with env vars
-`GREENHOUSE_DB_PASSWORD`, `KEYCLOAK_ISSUER_URI`, and `ESP32_BASE_URL` if
-needed. `ESP32_BASE_URL` defaults to `http://192.168.18.26`, the greenhouse
+`DATABASE_USERNAME`, `GREENHOUSE_DB_PASSWORD`, `KEYCLOAK_ISSUER_URI`, and
+`ESP32_BASE_URL` if needed. `ESP32_BASE_URL` defaults to
+`http://192.168.18.26`, the greenhouse
 ESP32 board's LAN address (see [spec/backend-spec.md](../spec/backend-spec.md))
 — unreachable from most dev sandboxes, so actuator endpoints can only be
 exercised against the real board from a machine on that LAN. This default

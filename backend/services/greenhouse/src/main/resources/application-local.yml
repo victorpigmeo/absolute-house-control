@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/house_control
-    password: ${GREENHOUSE_DB_PASSWORD:greenhouse_app}
+    url: jdbc:postgresql://db:5432/absolute_house_control
+    password: ${GREENHOUSE_DB_PASSWORD:sa_absolute_house_control}
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://keycloak:8080/realms/house-control}
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://keycloak:8080/realms/absolute-house-control}
