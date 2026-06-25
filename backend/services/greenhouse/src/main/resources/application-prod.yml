@@ -2,8 +2,3 @@ spring:
   datasource:
     url: ${GREENHOUSE_DB_URL}
     password: ${GREENHOUSE_DB_PASSWORD}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${KEYCLOAK_ISSUER_URI}

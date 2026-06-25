@@ -14,7 +14,7 @@ class GreenhouseProfileConfigTest {
       new ApplicationContextRunner().withInitializer(new ConfigDataApplicationContextInitializer());
 
   @Test
-  void noActiveProfile_defaultsToLocalAndResolvesLocalDatasourceAndIssuerUri() {
+  void noActiveProfile_defaultsToLocalAndResolvesLocalDatasource() {
     contextRunner.run(
         context -> {
           Environment environment = context.getEnvironment();
@@ -25,9 +25,6 @@ class GreenhouseProfileConfigTest {
               .isEqualTo("sa_absolute_house_control");
           assertThat(environment.getProperty("spring.datasource.username"))
               .isEqualTo("sa_absolute_house_control");
-          assertThat(
-                  environment.getProperty("spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-              .isEqualTo("http://keycloak:8080/realms/absolute-house-control");
         });
   }
 
@@ -40,10 +37,6 @@ class GreenhouseProfileConfigTest {
               Environment environment = context.getEnvironment();
               assertThat(environment.getProperty("spring.datasource.url"))
                   .isEqualTo("jdbc:postgresql://db:5432/absolute_house_control");
-              assertThat(
-                      environment.getProperty(
-                          "spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-                  .isEqualTo("http://keycloak:8080/realms/absolute-house-control");
             });
   }
 
@@ -76,30 +69,12 @@ class GreenhouseProfileConfigTest {
   }
 
   @Test
-  void prodProfile_withoutRequiredEnvVars_failsToResolveIssuerUriPlaceholder() {
-    contextRunner
-        .withPropertyValues("spring.profiles.active=prod")
-        .run(
-            context ->
-                assertThatThrownBy(
-                        () ->
-                            context
-                                .getEnvironment()
-                                .getProperty(
-                                    "spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Could not resolve placeholder")
-                    .hasMessageContaining("KEYCLOAK_ISSUER_URI"));
-  }
-
-  @Test
   void prodProfile_withAllRequiredEnvVarsSupplied_resolvesSuccessfully() {
     contextRunner
         .withPropertyValues(
             "spring.profiles.active=prod",
             "GREENHOUSE_DB_URL=jdbc:postgresql://prod-pg:5432/house_control",
-            "GREENHOUSE_DB_PASSWORD=supplied-secret",
-            "KEYCLOAK_ISSUER_URI=https://auth.example.invalid/realms/house-control")
+            "GREENHOUSE_DB_PASSWORD=supplied-secret")
         .run(
             context -> {
               Environment environment = context.getEnvironment();
@@ -107,10 +82,6 @@ class GreenhouseProfileConfigTest {
                   .isEqualTo("jdbc:postgresql://prod-pg:5432/house_control");
               assertThat(environment.getProperty("spring.datasource.password"))
                   .isEqualTo("supplied-secret");
-              assertThat(
-                      environment.getProperty(
-                          "spring.security.oauth2.resourceserver.jwt.issuer-uri"))
-                  .isEqualTo("https://auth.example.invalid/realms/house-control");
               assertThat(environment.getProperty("spring.datasource.username"))
                   .isEqualTo("sa_absolute_house_control");
             });
