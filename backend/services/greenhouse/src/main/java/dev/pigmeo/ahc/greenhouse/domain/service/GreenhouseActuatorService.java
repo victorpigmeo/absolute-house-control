@@ -1,6 +1,9 @@
-package dev.pigmeo.ahc.greenhouse.domain;
+package dev.pigmeo.ahc.greenhouse.domain.service;
 
-import dev.pigmeo.ahc.greenhouse.infrastructure.Esp32GpioClient;
+import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
+import dev.pigmeo.ahc.greenhouse.domain.models.SetFanCommand;
+import dev.pigmeo.ahc.greenhouse.domain.models.SetLedCommand;
+import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
 import java.time.Instant;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicReference;

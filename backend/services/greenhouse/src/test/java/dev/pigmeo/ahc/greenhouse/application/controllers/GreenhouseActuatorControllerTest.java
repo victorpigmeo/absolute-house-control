@@ -1,4 +1,4 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.controllers;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
-import dev.pigmeo.ahc.greenhouse.domain.GreenhouseActuatorService;
-import dev.pigmeo.ahc.greenhouse.domain.RunPumpCommand;
-import dev.pigmeo.ahc.greenhouse.infrastructure.Esp32GpioClient;
+import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
+import dev.pigmeo.ahc.greenhouse.domain.service.GreenhouseActuatorService;
+import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.Esp32ClientConfig;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.PumpSchedulerConfig;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.SecurityConfig;

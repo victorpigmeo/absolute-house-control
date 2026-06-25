@@ -1,4 +1,4 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.controllers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

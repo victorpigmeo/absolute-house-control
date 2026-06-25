@@ -1,8 +1,9 @@
-package dev.pigmeo.ahc.greenhouse.domain;
+package dev.pigmeo.ahc.greenhouse.domain.models;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import dev.pigmeo.ahc.greenhouse.domain.exception.InvalidPumpDurationException;
 import org.junit.jupiter.api.Test;
 
 class RunPumpCommandTest {

@@ -1,4 +1,6 @@
-package dev.pigmeo.ahc.greenhouse.domain;
+package dev.pigmeo.ahc.greenhouse.domain.models;
+
+import dev.pigmeo.ahc.greenhouse.domain.exception.InvalidPumpDurationException;
 
 public record RunPumpCommand(int durationSeconds) {
 
