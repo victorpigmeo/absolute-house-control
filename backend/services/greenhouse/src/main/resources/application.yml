@@ -4,11 +4,11 @@ spring:
   profiles:
     default: local
   datasource:
-    username: greenhouse_app
+    username: ${DATABASE_USERNAME:sa_absolute_house_control}
   flyway:
     schemas: greenhouse
     default-schema: greenhouse
-    create-schemas: false
+    create-schemas: true
 
 greenhouse:
   esp32:
