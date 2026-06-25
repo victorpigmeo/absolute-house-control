@@ -22,6 +22,11 @@ testcontainers = "2.0.5"
 # the 4.0.0-beta line is excluded as non-GA.
 wiremock = "3.13.2"
 
+# Not managed by Spring Boot's BOM (third-party project, not part of spring-boot-dependencies) --
+# pinned here following the same convention as wiremock above. The 2.x line only targets Spring
+# Boot 3.x; 3.0.3 is the latest stable release in the 3.x line that targets Spring Boot 4.
+springdoc-openapi = "3.0.3"
+
 [libraries]
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone-core" }
 
