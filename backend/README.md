@@ -15,11 +15,15 @@
 docker compose up -d
 ```
 
-Brings up Postgres (with the `greenhouse` schema and a least-privilege
-`greenhouse_app` role pre-created) and Keycloak (with the `house-control`
-realm and `greenhouse` client pre-imported), both on `localhost`. Postgres
-has a `pg_isready` healthcheck; Keycloak has none (its health-endpoint setup
-is version-specific and wasn't verified in this environment), so it may take
+Brings up Postgres (service name `db`, with the `greenhouse` schema and a
+least-privilege `greenhouse_app` role pre-created) and Keycloak (service
+name `keycloak`, with the `house-control` realm and `greenhouse` client
+pre-imported). Both service names double as their DNS hostnames for
+anything sharing the compose network (e.g. a devcontainer attached to it) —
+the `local` Spring profile connects to `db:5432`/`keycloak:8080` directly
+rather than via published `localhost` ports. Postgres has a `pg_isready`
+healthcheck; Keycloak has none (its health-endpoint setup is
+version-specific and wasn't verified in this environment), so it may take
 a few seconds after start before `--import-realm` finishes and it accepts
 connections.
 
