@@ -1,4 +1,4 @@
-package dev.pigmeo.ahc.greenhouse.infrastructure;
+package dev.pigmeo.ahc.greenhouse.infrastructure.client;
 
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.Esp32Properties;
 import org.springframework.stereotype.Component;

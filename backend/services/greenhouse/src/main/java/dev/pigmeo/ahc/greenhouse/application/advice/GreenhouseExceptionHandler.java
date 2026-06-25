@@ -1,6 +1,7 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.advice;
 
-import dev.pigmeo.ahc.greenhouse.domain.InvalidPumpDurationException;
+import dev.pigmeo.ahc.greenhouse.application.dto.ErrorResponse;
+import dev.pigmeo.ahc.greenhouse.domain.exception.InvalidPumpDurationException;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -33,6 +34,4 @@ public class GreenhouseExceptionHandler {
   public ErrorResponse handleInvalidPumpDuration(InvalidPumpDurationException ex) {
     return new ErrorResponse(ex.getMessage(), List.of());
   }
-
-  public record ErrorResponse(String error, List<String> details) {}
 }

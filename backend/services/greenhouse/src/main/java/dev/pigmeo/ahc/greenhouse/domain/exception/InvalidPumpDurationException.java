@@ -1,4 +1,4 @@
-package dev.pigmeo.ahc.greenhouse.domain;
+package dev.pigmeo.ahc.greenhouse.domain.exception;
 
 public class InvalidPumpDurationException extends RuntimeException {
 

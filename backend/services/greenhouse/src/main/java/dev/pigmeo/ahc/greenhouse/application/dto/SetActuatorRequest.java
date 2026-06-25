@@ -1,4 +1,4 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.dto;
 
 import jakarta.validation.constraints.NotNull;
 

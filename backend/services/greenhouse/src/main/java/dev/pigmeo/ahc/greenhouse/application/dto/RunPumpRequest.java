@@ -1,6 +1,6 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.dto;
 
-import dev.pigmeo.ahc.greenhouse.domain.RunPumpCommand;
+import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

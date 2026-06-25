@@ -1,5 +1,6 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.controllers;
 
+import dev.pigmeo.ahc.greenhouse.application.dto.SmokeResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,4 @@ public class SmokeController {
   public SmokeResponse ping() {
     return new SmokeResponse("greenhouse", "ok");
   }
-
-  public record SmokeResponse(String service, String status) {}
 }

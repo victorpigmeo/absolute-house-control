@@ -1,9 +1,13 @@
-package dev.pigmeo.ahc.greenhouse.application;
+package dev.pigmeo.ahc.greenhouse.application.controllers;
 
-import dev.pigmeo.ahc.greenhouse.domain.GreenhouseActuatorService;
-import dev.pigmeo.ahc.greenhouse.domain.RunPumpCommand;
-import dev.pigmeo.ahc.greenhouse.domain.SetFanCommand;
-import dev.pigmeo.ahc.greenhouse.domain.SetLedCommand;
+import dev.pigmeo.ahc.greenhouse.application.dto.ActuatorStateResponse;
+import dev.pigmeo.ahc.greenhouse.application.dto.RunPumpRequest;
+import dev.pigmeo.ahc.greenhouse.application.dto.RunPumpResponse;
+import dev.pigmeo.ahc.greenhouse.application.dto.SetActuatorRequest;
+import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
+import dev.pigmeo.ahc.greenhouse.domain.models.SetFanCommand;
+import dev.pigmeo.ahc.greenhouse.domain.models.SetLedCommand;
+import dev.pigmeo.ahc.greenhouse.domain.service.GreenhouseActuatorService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
