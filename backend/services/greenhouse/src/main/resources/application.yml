@@ -12,7 +12,7 @@ spring:
 
 greenhouse:
   esp32:
-    base-url: ${ESP32_BASE_URL:http://192.168.18.26}
+    base-url: ${ESP32_BASE_URL:http://192.168.18.26:8080}
     pins:
       led: 32
       fan: 26
@@ -29,4 +29,4 @@ management:
         enabled: true
 
 server:
-  port: 8081
+  port: 8080
