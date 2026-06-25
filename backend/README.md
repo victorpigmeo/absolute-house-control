@@ -76,6 +76,14 @@ env vars), or the application fails fast at startup with a "could not
 resolve placeholder" error rather than silently falling back to a
 local-dev credential.
 
+## API documentation
+
+`greenhouse` serves its OpenAPI spec at `/v3/api-docs` via
+`springdoc-openapi-starter-webmvc-ui`. This is what the frontend's
+OpenAPI-codegen step (see [spec/frontend-spec.md](../spec/frontend-spec.md))
+generates its typed client against — new services should add the same
+dependency so they're covered too.
+
 ## Known sandbox limitation (as of this PR)
 
 This change was implemented in an environment without a Docker/container
