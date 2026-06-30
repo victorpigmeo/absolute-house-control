@@ -23,6 +23,9 @@ test.describe.serial("greenhouse controls", () => {
 
     await ledSwitch.click();
     await expect(ledSwitch).not.toBeChecked();
+
+    await ledSwitch.click();
+    await expect(ledSwitch).toBeChecked();
   });
 
   test("toggling the fan reflects the confirmed on/off state", async ({
