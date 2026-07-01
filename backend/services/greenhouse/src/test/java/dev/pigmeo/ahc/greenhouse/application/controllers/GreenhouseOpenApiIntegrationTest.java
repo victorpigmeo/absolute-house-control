@@ -50,6 +50,7 @@ class GreenhouseOpenApiIntegrationTest {
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.paths['/api/greenhouse/led'].post").exists())
         .andExpect(jsonPath("$.paths['/api/greenhouse/fan'].post").exists())
-        .andExpect(jsonPath("$.paths['/api/greenhouse/pump'].post").exists());
+        .andExpect(jsonPath("$.paths['/api/greenhouse/pump'].post").exists())
+        .andExpect(jsonPath("$.paths['/api/greenhouse/state'].get").exists());
   }
 }

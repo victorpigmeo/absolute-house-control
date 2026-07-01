@@ -16,7 +16,7 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 - [x] Turning the LED on or off persists the new state to the database.
 - [x] Turning the fan on or off persists the new state to the database.
 - [x] Restarting the greenhouse service preserves the LED's and fan's last-known state instead of resetting to a default.
-- [ ] Before any command has ever been sent to the LED or fan, the read endpoint reports its state as off.
+- [x] Before any command has ever been sent to the LED or fan, the read endpoint reports its state as off.
 - [ ] Starting the water pump creates a new activation record with status `PENDING`, a recorded start time, and the requested duration, before the start command is sent to the device.
 - [ ] After the pump's auto-off command runs successfully, the corresponding activation record's status is updated to `COMPLETED`.
 - [ ] If the service restarts or crashes before the auto-off command runs, the activation record's status remains `PENDING`.
@@ -30,6 +30,6 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 
 ## Implementation Tasks
 - [x] [Backend #53: Persist LED/fan actuator state to Postgres](https://github.com/victorpigmeo/absolute-house-control/issues/53)
-- [ ] [Backend #54: Expose LED/fan state via GET endpoint](https://github.com/victorpigmeo/absolute-house-control/issues/54)
+- [x] [Backend #54: Expose LED/fan state via GET endpoint](https://github.com/victorpigmeo/absolute-house-control/issues/54)
 - [ ] [Backend #55: Record water pump activations with status](https://github.com/victorpigmeo/absolute-house-control/issues/55)
 - [ ] [Frontend #56: Load persisted LED/fan state on dashboard load](https://github.com/victorpigmeo/absolute-house-control/issues/56)
