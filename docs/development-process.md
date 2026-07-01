@@ -137,12 +137,20 @@ project's test/lint commands run differ.
    requirement's Acceptance Criteria checklist in
    `requirements/<goal-slug>/README.md` to check off anything this task
    just completed, before committing.
-8. Before committing, run exactly one code-review sub-agent over the
-   working diff, scoped to correctness bugs and possible runtime problems
-   only — not style, reuse, simplification, efficiency, or other cleanup.
-   Display its findings, ordered from most to least critical. Ask the user
-   whether to continue (commit as-is) or address the issues first — do not
-   commit until they respond.
+8. Before committing, run exactly two code-review sub-agents over the
+   working diff — no more. The `/code-review` skill may be used for this as
+   long as it's kept to these two agents total, with no further internal
+   fan-out.
+   - One agent scoped to correctness bugs, possible runtime problems, and
+     efficiency — weighted roughly 70% correctness/runtime problems, 30%
+     efficiency — not style, reuse, simplification, or other cleanup.
+   - One agent scoped to requirements correctness — whether the diff
+     actually satisfies the issue's Acceptance Criteria and, where
+     applicable, the referenced requirement/user story.
+
+   Display both agents' findings, ordered from most to least critical. Ask
+   the user whether to continue (commit as-is) or address the issues first
+   — do not commit until they respond.
 9. Commit, referencing the issue (e.g. `Refs #<n>` or `Closes #<n>`).
 10. Push the branch and open a PR targeting `master`:
     ```
@@ -160,7 +168,7 @@ commit → PR mechanics, with branch prefix `infra/<task-id>`. Infra tasks
 have **no test-run gate and no acceptance criteria** — any manual
 verification (e.g. `helm lint`, `kubectl apply --dry-run`) belongs in the
 issue's Implementation Steps, not as a formal gate. The mandatory
-code-review sub-agent step (step 8 in the backend/frontend workflow above)
+code-review sub-agents step (step 8 in the backend/frontend workflow above)
 still applies to infra tasks — only the test-gate and acceptance-criteria
 requirements are waived, not code review. The requirements-checklist step
 (step 7) still applies too, if the issue references a requirement.
