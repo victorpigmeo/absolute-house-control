@@ -15,6 +15,7 @@ import dev.pigmeo.ahc.greenhouse.domain.service.GreenhouseActuatorService;
 import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.Esp32ClientConfig;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.PumpSchedulerConfig;
+import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorStateRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(GreenhouseActuatorController.class)
@@ -40,6 +42,8 @@ class GreenhouseActuatorControllerTest {
   static void esp32Properties(DynamicPropertyRegistry registry) {
     registry.add("greenhouse.esp32.base-url", wireMock::baseUrl);
   }
+
+  @MockitoBean private ActuatorStateRepository actuatorStateRepository;
 
   @Autowired private MockMvc mockMvc;
 

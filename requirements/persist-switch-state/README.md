@@ -13,9 +13,9 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 7. The frontend must load the LED's and fan's current state from this endpoint when the greenhouse dashboard page loads, and display it accordingly.
 
 ## Acceptance Criteria
-- [ ] Turning the LED on or off persists the new state to the database.
-- [ ] Turning the fan on or off persists the new state to the database.
-- [ ] Restarting the greenhouse service preserves the LED's and fan's last-known state instead of resetting to a default.
+- [x] Turning the LED on or off persists the new state to the database.
+- [x] Turning the fan on or off persists the new state to the database.
+- [x] Restarting the greenhouse service preserves the LED's and fan's last-known state instead of resetting to a default.
 - [ ] Before any command has ever been sent to the LED or fan, the read endpoint reports its state as off.
 - [ ] Starting the water pump creates a new activation record with status `PENDING`, a recorded start time, and the requested duration, before the start command is sent to the device.
 - [ ] After the pump's auto-off command runs successfully, the corresponding activation record's status is updated to `COMPLETED`.
@@ -29,7 +29,7 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 - [US4: View current LED/fan state on page load](us-4-view-current-switch-state-on-load.md)
 
 ## Implementation Tasks
-- [ ] [Backend #53: Persist LED/fan actuator state to Postgres](https://github.com/victorpigmeo/absolute-house-control/issues/53)
+- [x] [Backend #53: Persist LED/fan actuator state to Postgres](https://github.com/victorpigmeo/absolute-house-control/issues/53)
 - [ ] [Backend #54: Expose LED/fan state via GET endpoint](https://github.com/victorpigmeo/absolute-house-control/issues/54)
 - [ ] [Backend #55: Record water pump activations with status](https://github.com/victorpigmeo/absolute-house-control/issues/55)
 - [ ] [Frontend #56: Load persisted LED/fan state on dashboard load](https://github.com/victorpigmeo/absolute-house-control/issues/56)

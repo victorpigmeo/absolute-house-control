@@ -4,6 +4,7 @@ import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
 import dev.pigmeo.ahc.greenhouse.domain.models.SetFanCommand;
 import dev.pigmeo.ahc.greenhouse.domain.models.SetLedCommand;
 import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
+import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorStateRepository;
 import java.time.Instant;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -14,21 +15,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class GreenhouseActuatorService {
 
+  private static final String DEVICE_LED = "led";
+  private static final String DEVICE_FAN = "fan";
+
   private final Esp32GpioClient esp32GpioClient;
   private final TaskScheduler taskScheduler;
+  private final ActuatorStateRepository actuatorStateRepository;
   private final AtomicReference<ScheduledFuture<?>> pendingPumpOff = new AtomicReference<>();
 
-  GreenhouseActuatorService(Esp32GpioClient esp32GpioClient, TaskScheduler taskScheduler) {
+  GreenhouseActuatorService(
+      Esp32GpioClient esp32GpioClient,
+      TaskScheduler taskScheduler,
+      ActuatorStateRepository actuatorStateRepository) {
     this.esp32GpioClient = esp32GpioClient;
     this.taskScheduler = taskScheduler;
+    this.actuatorStateRepository = actuatorStateRepository;
   }
 
   public boolean setLed(SetLedCommand command) {
-    return setActuator(esp32GpioClient::setLed, command.on());
+    return setActuator(DEVICE_LED, esp32GpioClient::setLed, command.on());
   }
 
   public boolean setFan(SetFanCommand command) {
-    return setActuator(esp32GpioClient::setFan, command.on());
+    return setActuator(DEVICE_FAN, esp32GpioClient::setFan, command.on());
   }
 
   public int runPump(RunPumpCommand command) {
@@ -39,7 +48,8 @@ public class GreenhouseActuatorService {
     return command.durationSeconds();
   }
 
-  private boolean setActuator(Consumer<Boolean> esp32Setter, boolean on) {
+  private boolean setActuator(String device, Consumer<Boolean> esp32Setter, boolean on) {
+    actuatorStateRepository.saveState(device, on);
     esp32Setter.accept(on);
     return on;
   }
