@@ -140,7 +140,9 @@ project's test/lint commands run differ.
 8. Before committing, run exactly two code-review sub-agents over the
    working diff — no more. The `/code-review` skill may be used for this as
    long as it's kept to these two agents total, with no further internal
-   fan-out.
+   fan-out. Both agents should run on Sonnet 4.5 at medium effort, and
+   report findings "caveman" style: short, blunt sentences that name the
+   problem and where it is, no hedging or softening.
    - One agent scoped to correctness bugs, possible runtime problems, and
      efficiency — weighted roughly 70% correctness/runtime problems, 30%
      efficiency — not style, reuse, simplification, or other cleanup.
@@ -216,3 +218,9 @@ be phrased like:
   — deferred until the greenhouse backend module is finished, or until
   explicitly requested; CI accordingly only covers backend and frontend
   for now.
+- Pinning the code-review sub-agents (step 8 above) to Sonnet 4.5
+  specifically — Claude Code's agent-launching tool currently only
+  supports selecting a model tier (e.g. "sonnet"), not an exact point
+  version, so the version resolves to whatever the current release is
+  rather than being force-pinned. Treat the Sonnet 4.5 instruction as
+  best-effort until/unless the tooling supports version pinning.
