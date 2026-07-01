@@ -84,25 +84,11 @@ OpenAPI-codegen step (see [spec/frontend-spec.md](../spec/frontend-spec.md))
 generates its typed client against — new services should add the same
 dependency so they're covered too.
 
-## Known sandbox limitation (as of this PR)
+## Keycloak/JWT authentication
 
-This change was implemented in an environment without a Docker/container
-runtime available. Compile, Spotless, Error Prone, and the security slice
-test (`./gradlew build`/`./gradlew test`) were verified green there. The
-Testcontainers Postgres integration test (`./gradlew integrationTest`) and
-`docker compose up -d` (Postgres + Keycloak, including the Keycloak
-realm-export import) could **not** be executed/verified in that environment
-and are deferred until Docker/Docker-in-Docker is available — see the PR
-description for details.
-
-Both test classes set a dummy, unreachable `issuer-uri` test property so the
-OAuth2 resource server's `JwtDecoder` bean can construct without a live
-Keycloak. This was confirmed safe for `SmokeControllerSecurityTest` in this
-sandbox (which does have real outbound network access): both cases ran in
-well under a second with no DNS/timeout errors, confirming Spring Security
-builds that decoder lazily rather than resolving the issuer's OIDC metadata
-at context-startup time — neither test actually triggers a decode (the 401
-case sends no token; the 200 case uses `spring-security-test`'s `jwt()`
-post-processor, which injects authentication directly and never calls the
-decoder). The same should hold for `GreenhouseFlywayIntegrationTest`'s
-identical setup, but that test couldn't be run here to confirm it directly.
+Keycloak/JWT validation is currently disabled in `greenhouse` (every
+endpoint is open) — Keycloak isn't set up locally in every environment yet,
+and the JWT requirement was blocking manual testing. Re-enablement is
+tracked as issue #40 (refs #41). See
+[spec/backend-spec.md](../spec/backend-spec.md)'s API gateway approach
+decision for the target (confirmed) behavior once this is re-enabled.
