@@ -72,7 +72,10 @@ describe("ActuatorToggle", () => {
     const ledSwitch = screen.getByRole("switch", { name: "LED light" });
 
     ledSwitch.click();
-    await waitFor(() => expect(ledSwitch).toBeChecked());
+    await waitFor(() => {
+      expect(ledSwitch).toBeChecked();
+      expect(ledSwitch).not.toBeDisabled();
+    });
     expect(setActuatorAction).toHaveBeenNthCalledWith(
       1,
       "/api/greenhouse/led",
@@ -80,7 +83,10 @@ describe("ActuatorToggle", () => {
     );
 
     ledSwitch.click();
-    await waitFor(() => expect(ledSwitch).not.toBeChecked());
+    await waitFor(() => {
+      expect(ledSwitch).not.toBeChecked();
+      expect(ledSwitch).not.toBeDisabled();
+    });
     expect(setActuatorAction).toHaveBeenNthCalledWith(
       2,
       "/api/greenhouse/led",
@@ -88,7 +94,10 @@ describe("ActuatorToggle", () => {
     );
 
     ledSwitch.click();
-    await waitFor(() => expect(ledSwitch).toBeChecked());
+    await waitFor(() => {
+      expect(ledSwitch).toBeChecked();
+      expect(ledSwitch).not.toBeDisabled();
+    });
     expect(setActuatorAction).toHaveBeenNthCalledWith(
       3,
       "/api/greenhouse/led",
