@@ -132,20 +132,25 @@ project's test/lint commands run differ.
    frontend tests for frontend tasks).
 5. Run that area's static analysis/lint check.
 6. Confirm every Acceptance Criterion in the issue is actually met.
-7. Before committing, run exactly one code-review sub-agent over the
+7. If the issue's Description references a requirement or user story (per
+   [requirements-process.md](requirements-process.md)), update that
+   requirement's Acceptance Criteria checklist in
+   `requirements/<goal-slug>/README.md` to check off anything this task
+   just completed, before committing.
+8. Before committing, run exactly one code-review sub-agent over the
    working diff, scoped to correctness bugs and possible runtime problems
    only — not style, reuse, simplification, efficiency, or other cleanup.
    Display its findings, ordered from most to least critical. Ask the user
    whether to continue (commit as-is) or address the issues first — do not
    commit until they respond.
-8. Commit, referencing the issue (e.g. `Refs #<n>` or `Closes #<n>`).
-9. Push the branch and open a PR targeting `master`:
-   ```
-   gh pr create -R victorpigmeo/absolute-house-control \
-     --base master --head <branch> \
-     --title "..." --body "Closes #<n>\n\n..."
-   ```
-10. Move the Project item to `Done` only after the PR is merged.
+9. Commit, referencing the issue (e.g. `Refs #<n>` or `Closes #<n>`).
+10. Push the branch and open a PR targeting `master`:
+    ```
+    gh pr create -R victorpigmeo/absolute-house-control \
+      --base master --head <branch> \
+      --title "..." --body "Closes #<n>\n\n..."
+    ```
+11. Move the Project item to `Done` only after the PR is merged.
 
 ### Infra tasks
 
@@ -155,9 +160,10 @@ commit → PR mechanics, with branch prefix `infra/<task-id>`. Infra tasks
 have **no test-run gate and no acceptance criteria** — any manual
 verification (e.g. `helm lint`, `kubectl apply --dry-run`) belongs in the
 issue's Implementation Steps, not as a formal gate. The mandatory
-code-review sub-agent step (step 7 in the backend/frontend workflow above)
+code-review sub-agent step (step 8 in the backend/frontend workflow above)
 still applies to infra tasks — only the test-gate and acceptance-criteria
-requirements are waived, not code review.
+requirements are waived, not code review. The requirements-checklist step
+(step 7) still applies too, if the issue references a requirement.
 
 ### Docs / spec / requirements changes
 

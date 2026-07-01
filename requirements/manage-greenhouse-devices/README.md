@@ -12,10 +12,10 @@ Allow a user to control the greenhouse's LED light, fan, and water pump, and vie
 6. The system must update the displayed LED, fan, and water pump state to reflect each device's actual current state, not just the last command sent, within 2 seconds of the change occurring.
 
 ## Acceptance Criteria
-- [ ] Turning the LED control on or off sets the LED to that state and the UI reflects the actual state within 2 seconds.
-- [ ] Turning the fan control on or off sets the fan to that state and the UI reflects the actual state within 2 seconds.
-- [ ] Submitting a valid duration (a positive whole number of seconds, up to 10) for the water pump turns the pump on, and the pump turns off automatically once that duration elapses.
-- [ ] Submitting a missing, non-numeric, fractional, non-positive, or over-10-second duration for the water pump shows an error and does not turn the pump on.
+- [x] Turning the LED control on or off sets the LED to that state and the UI reflects the actual state within 2 seconds.
+- [x] Turning the fan control on or off sets the fan to that state and the UI reflects the actual state within 2 seconds.
+- [x] Submitting a valid duration (a positive whole number of seconds, up to 10) for the water pump turns the pump on, and the pump turns off automatically once that duration elapses.
+- [x] Submitting a missing, non-numeric, fractional, non-positive, or over-10-second duration for the water pump shows an error and does not turn the pump on.
 - [ ] The dashboard displays the current DHT22 temperature and humidity readings, updated without a manual page reload.
 
 ## User Stories
