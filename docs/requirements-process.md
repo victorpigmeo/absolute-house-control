@@ -78,3 +78,14 @@ requirement/user story path in the issue's Description, e.g.:
 ```
 Implements requirements/view-greenhouse-temperature/us-1-show-current-reading.md
 ```
+
+When a requirement spans more than one area, list each per-area issue
+filed against it in the requirement's `README.md` as they're created (a
+simple checklist is enough) so it's visible in one place whether every
+area's work is done — there's no separate tracking issue.
+
+## Handling `<goal-slug>` collisions
+
+If a new requirement's slugified goal would collide with an existing
+`requirements/` folder name, stop and ask before creating it rather than
+silently disambiguating (e.g. appending a number).

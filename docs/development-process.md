@@ -2,13 +2,12 @@
 
 ## Overview
 
-This repo is spec-only today (see [spec/](../spec/)). This document defines
-the *process* by which future implementation work is tracked, branched,
-tested, and merged — it does not itself choose testing/static-analysis
-tooling. Backend and frontend test tooling are chosen (see
-[spec/backend-spec.md](../spec/backend-spec.md), [spec/frontend-spec.md](../spec/frontend-spec.md));
-the frontend lint tool remains an open decision (see
-[Open items / deferred decisions](#open-items--deferred-decisions)).
+Specs are mostly settled (see [spec/](../spec/)), and backend/frontend
+implementation is already underway. This document defines the *process* by
+which implementation work is tracked, branched, tested, and merged — it
+does not itself choose testing/static-analysis tooling. Backend and
+frontend test and lint tooling are both chosen (see
+[spec/backend-spec.md](../spec/backend-spec.md), [spec/frontend-spec.md](../spec/frontend-spec.md)).
 
 Work is split into three independent areas, matching the repo structure:
 backend, frontend, infra. Each area has its own GitHub Project, its own issue
@@ -155,7 +154,18 @@ any planning or other work — then the same checkout → branch → implement �
 commit → PR mechanics, with branch prefix `infra/<task-id>`. Infra tasks
 have **no test-run gate and no acceptance criteria** — any manual
 verification (e.g. `helm lint`, `kubectl apply --dry-run`) belongs in the
-issue's Implementation Steps, not as a formal gate.
+issue's Implementation Steps, not as a formal gate. The mandatory
+code-review sub-agent step (step 7 in the backend/frontend workflow above)
+still applies to infra tasks — only the test-gate and acceptance-criteria
+requirements are waived, not code review.
+
+### Docs / spec / requirements changes
+
+Changes to `docs/`, `spec/`, `requirements/`, or `CLAUDE.md` themselves
+don't fit backend/frontend/infra — they're not tied to any one area's
+tooling. These use branch prefix `docs/<short-slug>` and skip the
+issue/Project-board tracking used by the other three areas entirely; just
+branch, commit, and open a PR.
 
 ## Testing gate
 
@@ -179,8 +189,6 @@ be phrased like:
 
 ## Open items / deferred decisions
 
-- Frontend lint tool — TBD (Next.js ships ESLint by default, but
-  selection/config is still an open decision per [spec/frontend-spec.md](../spec/frontend-spec.md)).
 - Custom Project fields beyond the default `Status` — intentionally
   deferred; keep setup minimal until a need arises.
 - Required-status-checks branch protection for the backend/frontend CI
