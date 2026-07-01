@@ -15,3 +15,7 @@
 - **Given** one light cycle is marked active
 - **When** I view the list
 - **Then** that cycle is visibly marked as active and the others are not
+
+## Tasks
+- [ ] [Backend #68](https://github.com/victorpigmeo/absolute-house-control/issues/68) — List all light cycles endpoint
+- [ ] [Frontend #72](https://github.com/victorpigmeo/absolute-house-control/issues/72) — List all light cycles with active indicator
