@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/greenhouse/light-cycles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/greenhouse/led": {
         parameters: {
             query?: never;
@@ -84,6 +100,19 @@ export interface components {
             /** Format: int32 */
             durationSeconds?: number;
         };
+        CreateLightCycleRequest: {
+            name: string;
+            onCron: string;
+            offCron: string;
+        };
+        LightCycleResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            onCron?: string;
+            offCron?: string;
+            active?: boolean;
+        };
         SetActuatorRequest: {
             on: boolean;
         };
@@ -123,6 +152,39 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["RunPumpResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLightCycleRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["LightCycleResponse"];
                 };
             };
             /** @description Bad Request */

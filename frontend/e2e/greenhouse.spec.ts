@@ -81,3 +81,84 @@ test.describe.serial("greenhouse controls", () => {
     expect(after.pump).toBe(before.pump);
   });
 });
+
+test.describe.serial("light cycle creation", () => {
+  test("a valid submission creates a light cycle and it appears in the list", async ({
+    page,
+  }) => {
+    await page.goto("/greenhouse");
+
+    await page.getByLabel("Name").fill("Veg");
+    await page.getByLabel("ON cron").fill("0 0 8 * * *");
+    await page.getByLabel("OFF cron").fill("0 0 20 * * *");
+    await page.getByRole("button", { name: "Create light cycle" }).click();
+
+    await expect(page.getByText("Veg")).toBeVisible();
+  });
+
+  test("an invalid ON cron shows a field error and never calls the backend", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/greenhouse");
+    const before = await callCounts(request);
+
+    await page.getByLabel("Name").fill("Flora");
+    await page.getByLabel("ON cron").fill("not a cron");
+    await page.getByLabel("OFF cron").fill("0 0 20 * * *");
+    await page.getByRole("button", { name: "Create light cycle" }).click();
+
+    await expect(
+      page.getByText(/Must be a 6-field cron expression/),
+    ).toBeVisible();
+    const after = await callCounts(request);
+    expect(after.lightCycles).toBe(before.lightCycles);
+  });
+
+  test("an invalid OFF cron shows a field error and never calls the backend", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/greenhouse");
+    const before = await callCounts(request);
+
+    await page.getByLabel("Name").fill("Flora");
+    await page.getByLabel("ON cron").fill("0 0 8 * * *");
+    await page.getByLabel("OFF cron").fill("not a cron");
+    await page.getByRole("button", { name: "Create light cycle" }).click();
+
+    await expect(
+      page.getByText(/Must be a 6-field cron expression/),
+    ).toBeVisible();
+    const after = await callCounts(request);
+    expect(after.lightCycles).toBe(before.lightCycles);
+  });
+
+  test("typing a valid ON cron updates the live preview without submitting", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/greenhouse");
+    const before = await callCounts(request);
+
+    await page.getByLabel("ON cron").fill("0 0 8 * * *");
+
+    await expect(page.getByText("At 08:00 AM")).toBeVisible();
+    const after = await callCounts(request);
+    expect(after.lightCycles).toBe(before.lightCycles);
+  });
+
+  test("typing a valid OFF cron updates the live preview without submitting", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/greenhouse");
+    const before = await callCounts(request);
+
+    await page.getByLabel("OFF cron").fill("0 0 20 * * *");
+
+    await expect(page.getByText("At 08:00 PM")).toBeVisible();
+    const after = await callCounts(request);
+    expect(after.lightCycles).toBe(before.lightCycles);
+  });
+});

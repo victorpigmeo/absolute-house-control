@@ -18,9 +18,9 @@ Allow a user to define named LED light cycles (e.g. Veg, Flora) with cron-schedu
 12. If no light cycle is active, the system must not automatically change the LED's state, leaving it under manual/dashboard control.
 
 ## Acceptance Criteria
-- [ ] Submitting the setup form with a name and two syntactically valid 6-field cron expressions creates a new light cycle that appears in the list.
-- [ ] Submitting the setup form with a cron expression that is not a valid 6-field cron expression shows an error and does not create a cycle.
-- [ ] Typing into either cron expression field updates a human-readable description of when it runs, without submitting the form or reloading the page.
+- [x] Submitting the setup form with a name and two syntactically valid 6-field cron expressions creates a new light cycle that appears in the list.
+- [x] Submitting the setup form with a cron expression that is not a valid 6-field cron expression shows an error and does not create a cycle.
+- [x] Typing into either cron expression field updates a human-readable description of when it runs, without submitting the form or reloading the page.
 - [ ] The setup page's list shows every light cycle currently stored in the database, including ones created in a previous session, and indicates which one (if any) is active.
 - [ ] Activating a cycle while no other cycle is active makes it the active cycle immediately, with no confirmation prompt.
 - [ ] Activating a cycle while a different cycle is active shows a confirmation prompt before changing anything.
