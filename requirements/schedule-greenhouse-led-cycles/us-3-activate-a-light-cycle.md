@@ -25,3 +25,7 @@
 - **Given** a cycle is activated whose schedule says the LED should currently be on (or off)
 - **When** the activation completes
 - **Then** the greenhouse LED is immediately set to that on/off state, rather than waiting for the next cron trigger
+
+## Tasks
+- [ ] [Backend #69](https://github.com/victorpigmeo/absolute-house-control/issues/69) — Activate a light cycle endpoint
+- [ ] [Frontend #73](https://github.com/victorpigmeo/absolute-house-control/issues/73) — Activate a light cycle with switch confirmation

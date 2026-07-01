@@ -25,3 +25,7 @@
 - **Given** the setup page is open
 - **When** I type a valid cron expression into the ON or OFF field
 - **Then** a human-readable description of when it will run updates automatically, without submitting the form
+
+## Tasks
+- [ ] [Backend #67](https://github.com/victorpigmeo/absolute-house-control/issues/67) — Create light cycle: entity + validated create endpoint
+- [ ] [Frontend #71](https://github.com/victorpigmeo/absolute-house-control/issues/71) — Create light cycle form with live cron preview

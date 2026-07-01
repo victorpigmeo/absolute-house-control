@@ -35,3 +35,12 @@ Allow a user to define named LED light cycles (e.g. Veg, Flora) with cron-schedu
 - [US2: View all light cycles](us-2-view-all-light-cycles.md)
 - [US3: Activate a light cycle](us-3-activate-a-light-cycle.md)
 - [US4: Automatic LED control by the active cycle's schedule](us-4-automatic-led-control-by-schedule.md)
+
+## Tasks
+- [ ] [Backend #67](https://github.com/victorpigmeo/absolute-house-control/issues/67) — Create light cycle: entity + validated create endpoint (US1)
+- [ ] [Backend #68](https://github.com/victorpigmeo/absolute-house-control/issues/68) — List all light cycles endpoint (US2)
+- [ ] [Backend #69](https://github.com/victorpigmeo/absolute-house-control/issues/69) — Activate a light cycle endpoint (US3)
+- [ ] [Backend #70](https://github.com/victorpigmeo/absolute-house-control/issues/70) — Automatic LED scheduling by active cycle's cron, resuming after restart (US4)
+- [ ] [Frontend #71](https://github.com/victorpigmeo/absolute-house-control/issues/71) — Create light cycle form with live cron preview (US1)
+- [ ] [Frontend #72](https://github.com/victorpigmeo/absolute-house-control/issues/72) — List all light cycles with active indicator (US2)
+- [ ] [Frontend #73](https://github.com/victorpigmeo/absolute-house-control/issues/73) — Activate a light cycle with switch confirmation (US3)

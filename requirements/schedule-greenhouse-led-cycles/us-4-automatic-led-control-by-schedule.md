@@ -25,3 +25,6 @@
 - **Given** a light cycle is active
 - **When** the backend service restarts
 - **Then** automatic ON/OFF scheduling for that cycle resumes without the user needing to reactivate it
+
+## Tasks
+- [ ] [Backend #70](https://github.com/victorpigmeo/absolute-house-control/issues/70) — Automatic LED scheduling by active cycle's cron, resuming after restart
