@@ -51,6 +51,7 @@ class GreenhouseOpenApiIntegrationTest {
         .andExpect(jsonPath("$.paths['/api/greenhouse/led'].post").exists())
         .andExpect(jsonPath("$.paths['/api/greenhouse/fan'].post").exists())
         .andExpect(jsonPath("$.paths['/api/greenhouse/pump'].post").exists())
-        .andExpect(jsonPath("$.paths['/api/greenhouse/state'].get").exists());
+        .andExpect(jsonPath("$.paths['/api/greenhouse/state'].get").exists())
+        .andExpect(jsonPath("$.paths['/api/greenhouse/light-cycles'].post").exists());
   }
 }
