@@ -12,4 +12,5 @@ full structure and naming rules — start a new requirement by copying
 | [Log In To The System](log-in-to-the-system/README.md) | Allow a user to log in to access the system. |
 | [Manage Greenhouse Devices](manage-greenhouse-devices/README.md) | Allow a user to control the greenhouse's LED light, fan, and water pump, and view DHT22 sensor readings. |
 | [Persist Switch State](persist-switch-state/README.md) | Persist the last-known state of the greenhouse's LED, fan, and water pump to the database. |
+| [Schedule Greenhouse LED Cycles](schedule-greenhouse-led-cycles/README.md) | Allow a user to define named LED light cycles with cron-scheduled on/off times and activate one to control the greenhouse LED automatically. |
 | [View Greenhouse History](view-greenhouse-history/README.md) | Allow a user to view historical DHT22 sensor readings as charts and reports. |
