@@ -1,4 +1,5 @@
 import { ActuatorToggle } from "./_components/actuator-toggle";
+import { LightCycleForm } from "./_components/light-cycle-form";
 import { PumpForm } from "./_components/pump-form";
 import { getGreenhouseState } from "./queries";
 
@@ -19,6 +20,7 @@ export default async function GreenhousePage() {
         initialOn={state.fan}
       />
       <PumpForm />
+      <LightCycleForm />
     </main>
   );
 }

@@ -1,5 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import { runPumpAction, setActuatorAction } from "../actions";
+import {
+  createLightCycleAction,
+  runPumpAction,
+  setActuatorAction,
+} from "../actions";
 import client from "@/lib/greenhouse/client";
 
 vi.mock("@/lib/greenhouse/client", () => ({
@@ -136,6 +140,121 @@ describe("setActuatorAction", () => {
     } as never);
 
     const result = await setActuatorAction("/api/greenhouse/led", true);
+
+    expect(result.error).toBeTruthy();
+  });
+});
+
+describe("createLightCycleAction", () => {
+  const values = { name: "Veg", onCron: "0 0 8 * * *", offCron: "0 0 20 * * *" };
+
+  beforeEach(() => {
+    vi.mocked(client.POST).mockReset();
+  });
+
+  it("calls the backend and returns the created light cycle", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: { id: 1, ...values, active: false },
+      error: undefined,
+      response: new Response(),
+    } as never);
+
+    const result = await createLightCycleAction(values);
+
+    expect(client.POST).toHaveBeenCalledWith("/api/greenhouse/light-cycles", {
+      body: values,
+    });
+    expect(result.lightCycle).toEqual({ id: 1, ...values, active: false });
+    expect(result.error).toBeUndefined();
+    expect(result.fieldErrors).toBeUndefined();
+  });
+
+  it("parses field-scoped errors from the backend's validation details", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: undefined,
+      error: {
+        error: "Validation failed",
+        details: ["onCron: must be a valid 6-field cron expression"],
+      },
+      response: new Response(),
+    } as never);
+
+    const result = await createLightCycleAction(values);
+
+    expect(result.fieldErrors).toEqual({
+      onCron: "must be a valid 6-field cron expression",
+    });
+    expect(result.error).toBeUndefined();
+  });
+
+  it("parses a field-scoped error for offCron", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: undefined,
+      error: {
+        error: "Validation failed",
+        details: ["offCron: must be a valid 6-field cron expression"],
+      },
+      response: new Response(),
+    } as never);
+
+    const result = await createLightCycleAction(values);
+
+    expect(result.fieldErrors).toEqual({
+      offCron: "must be a valid 6-field cron expression",
+    });
+    expect(result.error).toBeUndefined();
+  });
+
+  it("surfaces an unrecognized detail string as a generic error alongside any field errors", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: undefined,
+      error: {
+        error: "Validation failed",
+        details: [
+          "onCron: must be a valid 6-field cron expression",
+          "onCron and offCron must not overlap",
+        ],
+      },
+      response: new Response(),
+    } as never);
+
+    const result = await createLightCycleAction(values);
+
+    expect(result.fieldErrors).toEqual({
+      onCron: "must be a valid 6-field cron expression",
+    });
+    expect(result.error).toBe("onCron and offCron must not overlap");
+  });
+
+  it("relays a generic backend error when there are no field details", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: undefined,
+      error: { error: "Malformed request body", details: [] },
+      response: new Response(),
+    } as never);
+
+    const result = await createLightCycleAction(values);
+
+    expect(result.error).toBe("Malformed request body");
+    expect(result.fieldErrors).toBeUndefined();
+  });
+
+  it("falls back to a generic error on a network failure", async () => {
+    vi.mocked(client.POST).mockRejectedValue(new Error("fetch failed"));
+
+    const result = await createLightCycleAction(values);
+
+    expect(result.error).toBeTruthy();
+  });
+
+  it("falls back to a generic error on a non-2xx response with no body", async () => {
+    vi.mocked(client.POST).mockResolvedValue({
+      data: undefined,
+      error: undefined,
+      response: new Response(null, { status: 502 }),
+    } as never);
+
+    const result = await createLightCycleAction(values);
 
     expect(result.error).toBeTruthy();
   });

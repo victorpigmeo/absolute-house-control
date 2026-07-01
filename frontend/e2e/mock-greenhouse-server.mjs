@@ -1,8 +1,10 @@
 import { createServer } from "node:http";
 
 const PORT = 4010;
-const calls = { led: 0, fan: 0, pump: 0 };
+const calls = { led: 0, fan: 0, pump: 0, lightCycles: 0 };
 const state = { led: false, fan: false };
+const SIX_FIELD_CRON = /^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+$/;
+let nextLightCycleId = 1;
 
 function readJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -62,6 +64,33 @@ const server = createServer(async (req, res) => {
       calls.pump++;
       const { durationSeconds } = await readJsonBody(req);
       sendJson(res, 200, { durationSeconds });
+      return;
+    }
+
+    if (req.method === "POST" && req.url === "/api/greenhouse/light-cycles") {
+      calls.lightCycles++;
+      const body = await readJsonBody(req);
+      const details = [];
+      if (!body.name || !body.name.trim()) {
+        details.push("name: must not be blank");
+      }
+      if (!body.onCron || !SIX_FIELD_CRON.test(body.onCron)) {
+        details.push("onCron: must be a valid 6-field cron expression");
+      }
+      if (!body.offCron || !SIX_FIELD_CRON.test(body.offCron)) {
+        details.push("offCron: must be a valid 6-field cron expression");
+      }
+      if (details.length > 0) {
+        sendJson(res, 400, { error: "Validation failed", details });
+        return;
+      }
+      sendJson(res, 200, {
+        id: nextLightCycleId++,
+        name: body.name,
+        onCron: body.onCron,
+        offCron: body.offCron,
+        active: false,
+      });
       return;
     }
 
