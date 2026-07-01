@@ -44,3 +44,16 @@ GitHub Projects below.
 Tasks are tracked in per-area GitHub Projects and follow a branch/PR
 workflow described in [docs/development-process.md](docs/development-process.md).
 Read it before picking up or filing a backend, frontend, or infra task.
+
+## Automated/background sandbox environments
+
+`backend/README.md`'s "Local dev environment" (`docker compose up -d`)
+is the correct instruction for a normal contributor machine — leave it
+as-is. Some automated job sandboxes are pre-wired into an external Docker
+network where the `greenhouse` service's `db` and `keycloak` dependencies
+are already reachable by hostname, without running compose yourself.
+Before running `docker compose up -d` in such an environment, check
+whether they're already up (e.g. `getent hosts db`, a TCP check against
+`db:5432`/`keycloak:8080`); if so, skip compose and just run
+`./gradlew :services:greenhouse:bootRun` directly, after confirming no
+other instance already holds the port.
