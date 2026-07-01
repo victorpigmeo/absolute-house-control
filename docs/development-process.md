@@ -141,8 +141,9 @@ project's test/lint commands run differ.
    working diff — no more. The `/code-review` skill may be used for this as
    long as it's kept to these two agents total, with no further internal
    fan-out.
-   - One agent scoped to correctness bugs and possible runtime problems
-     only — not style, reuse, simplification, efficiency, or other cleanup.
+   - One agent scoped to correctness bugs, possible runtime problems, and
+     efficiency — weighted roughly 70% correctness/runtime problems, 30%
+     efficiency — not style, reuse, simplification, or other cleanup.
    - One agent scoped to requirements correctness — whether the diff
      actually satisfies the issue's Acceptance Criteria and, where
      applicable, the referenced requirement/user story.
