@@ -1,14 +1,19 @@
 package dev.pigmeo.ahc.greenhouse.domain.service;
 
+import dev.pigmeo.ahc.greenhouse.domain.models.GreenhouseState;
 import dev.pigmeo.ahc.greenhouse.domain.models.RunPumpCommand;
 import dev.pigmeo.ahc.greenhouse.domain.models.SetFanCommand;
 import dev.pigmeo.ahc.greenhouse.domain.models.SetLedCommand;
 import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
+import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorState;
 import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorStateRepository;
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +43,14 @@ public class GreenhouseActuatorService {
 
   public boolean setFan(SetFanCommand command) {
     return setActuator(DEVICE_FAN, esp32GpioClient::setFan, command.on());
+  }
+
+  public GreenhouseState getState() {
+    Map<String, Boolean> onByDevice =
+        actuatorStateRepository.findByDeviceIn(List.of(DEVICE_LED, DEVICE_FAN)).stream()
+            .collect(Collectors.toMap(ActuatorState::getDevice, ActuatorState::isOn));
+    return new GreenhouseState(
+        onByDevice.getOrDefault(DEVICE_LED, false), onByDevice.getOrDefault(DEVICE_FAN, false));
   }
 
   public int runPump(RunPumpCommand command) {

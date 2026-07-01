@@ -5,6 +5,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +17,9 @@ import dev.pigmeo.ahc.greenhouse.domain.service.GreenhouseActuatorService;
 import dev.pigmeo.ahc.greenhouse.infrastructure.client.Esp32GpioClient;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.Esp32ClientConfig;
 import dev.pigmeo.ahc.greenhouse.infrastructure.config.PumpSchedulerConfig;
+import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorState;
 import dev.pigmeo.ahc.greenhouse.infrastructure.persistence.ActuatorStateRepository;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(GreenhouseActuatorController.class)
 @Import({
@@ -191,5 +196,26 @@ class GreenhouseActuatorControllerTest {
         .andExpect(jsonPath("$.error").value("Validation failed"));
 
     wireMock.verify(0, getRequestedFor(urlMatching("/api/gpio/set/25/.*")));
+  }
+
+  @Test
+  void getState_withPersistedState_returnsPersistedLedAndFan() throws Exception {
+    when(actuatorStateRepository.findByDeviceIn(anyCollection()))
+        .thenReturn(List.of(new ActuatorState("led", true)));
+
+    mockMvc
+        .perform(MockMvcRequestBuilders.get("/api/greenhouse/state"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.led").value(true))
+        .andExpect(jsonPath("$.fan").value(false));
+  }
+
+  @Test
+  void getState_beforeAnyCommandSent_returnsLedAndFanOff() throws Exception {
+    mockMvc
+        .perform(MockMvcRequestBuilders.get("/api/greenhouse/state"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.led").value(false))
+        .andExpect(jsonPath("$.fan").value(false));
   }
 }

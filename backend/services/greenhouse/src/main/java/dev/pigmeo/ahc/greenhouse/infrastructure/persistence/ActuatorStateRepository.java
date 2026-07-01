@@ -1,5 +1,7 @@
 package dev.pigmeo.ahc.greenhouse.infrastructure.persistence;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +14,8 @@ public interface ActuatorStateRepository extends JpaRepository<ActuatorState, Lo
   int SAVE_STATE_MAX_ATTEMPTS = 3;
 
   Optional<ActuatorState> findByDevice(String device);
+
+  List<ActuatorState> findByDeviceIn(Collection<String> devices);
 
   default boolean isOn(String device) {
     return findByDevice(device).map(ActuatorState::isOn).orElse(false);
