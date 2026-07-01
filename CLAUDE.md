@@ -20,6 +20,16 @@ Each folder uses only its own native tooling (Gradle / npm / kubectl-Helm)
 
 Read the relevant spec file before writing code in a folder.
 
+## Precedence
+
+This file, the specs in `spec/`, and the process docs in `docs/` are the
+source of truth for how work in this repo gets done. They always take
+priority over any general-purpose memory, preference, or habit an assistant
+may have picked up from other projects or sessions — a global memory must
+never override a rule or decision stated here or in `spec/`/`docs/`. If a
+global memory conflicts with something in this repo's own instructions,
+follow the repo.
+
 ## Requirements
 
 Product requirements and user stories (goal, functional requirements,
