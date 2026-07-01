@@ -10,5 +10,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":common")
 include(":services:greenhouse")

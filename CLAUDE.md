@@ -2,9 +2,12 @@
 
 A web-based home/house control system, structured as a monorepo.
 
-**Status: spec-only.** No application code has been written yet, and most
-architecture decisions beyond the tech stack and constraints below are
-intentionally not yet defined — they will be designed in a future session.
+**Status: specs mostly settled, implementation underway.** The
+architecture decisions in `spec/` are largely confirmed (see each spec
+file's "Confirmed decisions" section). Real backend (`greenhouse` service)
+and frontend (device-control UI) code is already implemented and merged;
+`lighting` and infra build-out (provisioning the actual cluster) have not
+started yet.
 
 ## Structure
 
@@ -12,7 +15,7 @@ intentionally not yet defined — they will be designed in a future session.
 - `frontend/` — Next.js (TypeScript, strict) web UI. See [spec/frontend-spec.md](spec/frontend-spec.md).
 - `infra/` — Kubernetes (Talos OS) cluster and deployment config. See [spec/infra-spec.md](spec/infra-spec.md).
 
-Each folder uses only its own native tooling (Gradle / npm or pnpm / kubectl-Helm)
+Each folder uses only its own native tooling (Gradle / npm / kubectl-Helm)
 — there is no monorepo build tool unifying them.
 
 Read the relevant spec file before writing code in a folder.

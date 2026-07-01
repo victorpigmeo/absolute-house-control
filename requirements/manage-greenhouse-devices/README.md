@@ -6,16 +6,16 @@ Allow a user to control the greenhouse's LED light, fan, and water pump, and vie
 ## Functional Requirements
 1. The system must allow a user to turn the LED light on or off.
 2. The system must allow a user to turn the fan on or off.
-3. The system must allow a user to turn the water pump on for a user-specified duration in seconds, after which it must turn off automatically.
-4. The system must reject a water pump duration that is missing, non-numeric, or not a positive number, and must not start the pump in that case.
+3. The system must allow a user to turn the water pump on for a user-specified duration in seconds, up to a maximum of 10 seconds, after which it must turn off automatically.
+4. The system must reject a water pump duration that is missing, not a positive whole number of seconds, or exceeds the 10-second maximum, and must not start the pump in that case.
 5. The system must display the current temperature and humidity reading from the DHT22 sensor.
-6. The system must update the displayed LED, fan, and water pump state to reflect each device's actual current state, not just the last command sent.
+6. The system must update the displayed LED, fan, and water pump state to reflect each device's actual current state, not just the last command sent, within 2 seconds of the change occurring.
 
 ## Acceptance Criteria
-- [ ] Turning the LED control on or off sets the LED to that state and the UI reflects the actual state.
-- [ ] Turning the fan control on or off sets the fan to that state and the UI reflects the actual state.
-- [ ] Submitting a valid duration in seconds for the water pump turns the pump on, and the pump turns off automatically once that duration elapses.
-- [ ] Submitting a missing, non-numeric, or non-positive duration for the water pump shows an error and does not turn the pump on.
+- [ ] Turning the LED control on or off sets the LED to that state and the UI reflects the actual state within 2 seconds.
+- [ ] Turning the fan control on or off sets the fan to that state and the UI reflects the actual state within 2 seconds.
+- [ ] Submitting a valid duration (a positive whole number of seconds, up to 10) for the water pump turns the pump on, and the pump turns off automatically once that duration elapses.
+- [ ] Submitting a missing, non-numeric, fractional, non-positive, or over-10-second duration for the water pump shows an error and does not turn the pump on.
 - [ ] The dashboard displays the current DHT22 temperature and humidity readings, updated without a manual page reload.
 
 ## User Stories

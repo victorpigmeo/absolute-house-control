@@ -7,7 +7,7 @@ Allow a user to view historical DHT22 sensor readings as charts and reports.
 Builds on the live DHT22 readings introduced in the Manage Greenhouse Devices requirement, adding persistence of those readings over time and historical visualization.
 
 ## Functional Requirements
-1. The system must record each DHT22 temperature and humidity reading along with the time it was taken.
+1. The system must record a DHT22 temperature and humidity reading, along with the time it was taken, at least once every 60 seconds — independently of whether the live dashboard is open.
 2. The system must retain historical DHT22 readings so they remain available for later viewing.
 3. The system must allow a user to select a time range and view a chart of the temperature and humidity readings recorded within that range.
 4. The system must allow a user to select a time range and view a report showing the minimum, maximum, and average temperature and humidity recorded within that range.
