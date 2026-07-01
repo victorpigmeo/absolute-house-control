@@ -32,4 +32,4 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 - [x] [Backend #53: Persist LED/fan actuator state to Postgres](https://github.com/victorpigmeo/absolute-house-control/issues/53)
 - [x] [Backend #54: Expose LED/fan state via GET endpoint](https://github.com/victorpigmeo/absolute-house-control/issues/54)
 - [ ] [Backend #55: Record water pump activations with status](https://github.com/victorpigmeo/absolute-house-control/issues/55)
-- [ ] [Frontend #56: Load persisted LED/fan state on dashboard load](https://github.com/victorpigmeo/absolute-house-control/issues/56)
+- [x] [Frontend #56: Load persisted LED/fan state on dashboard load](https://github.com/victorpigmeo/absolute-house-control/issues/56)

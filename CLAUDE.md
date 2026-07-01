@@ -30,6 +30,17 @@ never override a rule or decision stated here or in `spec/`/`docs/`. If a
 global memory conflicts with something in this repo's own instructions,
 follow the repo.
 
+## Prefer the spec and docs over scanning the codebase
+
+`spec/*.md` and the process docs in `docs/` are kept up to date as the
+source of truth for how this project is architected and how work gets
+done here. Before exploring the codebase to answer an architecture,
+convention, or process question, check the relevant spec/doc file first.
+Only fall back to scanning the actual code when the spec/docs don't cover
+what's needed (e.g. an exact current function signature or a file that
+isn't worth spec-ifying) — don't re-derive decisions that are already
+written down.
+
 ## Requirements
 
 Product requirements and user stories (goal, functional requirements,
