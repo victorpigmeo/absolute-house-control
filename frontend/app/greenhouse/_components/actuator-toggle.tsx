@@ -7,11 +7,13 @@ import { setActuatorAction, type ActuatorPath } from "../actions";
 export function ActuatorToggle({
   path,
   label,
+  initialOn,
 }: {
   path: ActuatorPath;
   label: string;
+  initialOn: boolean;
 }) {
-  const [on, setOn] = useState<boolean | null>(null);
+  const [on, setOn] = useState(initialOn);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -31,15 +33,10 @@ export function ActuatorToggle({
     <div className="flex items-center justify-between gap-4">
       <div className="flex flex-col">
         <span className="font-medium">{label}</span>
-        {on === null && !error && (
-          <span className="text-muted-foreground text-sm">
-            State unknown until toggled
-          </span>
-        )}
         {error && <span className="text-destructive text-sm">{error}</span>}
       </div>
       <Switch
-        checked={on ?? false}
+        checked={on}
         onCheckedChange={handleChange}
         disabled={isPending}
         aria-label={label}

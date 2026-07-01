@@ -12,17 +12,42 @@ describe("ActuatorToggle", () => {
     vi.mocked(setActuatorAction).mockReset();
   });
 
-  it("shows state as unknown until the first toggle", () => {
-    render(<ActuatorToggle path="/api/greenhouse/led" label="LED light" />);
+  it("renders checked when the initial state is on", () => {
+    render(
+      <ActuatorToggle
+        path="/api/greenhouse/led"
+        label="LED light"
+        initialOn={true}
+      />,
+    );
 
-    expect(screen.getByText("State unknown until toggled")).toBeInTheDocument();
-    expect(screen.getByRole("switch", { name: "LED light" })).not.toBeChecked();
+    expect(screen.getByRole("switch", { name: "LED light" })).toBeChecked();
+  });
+
+  it("renders unchecked when the initial state is off", () => {
+    render(
+      <ActuatorToggle
+        path="/api/greenhouse/led"
+        label="LED light"
+        initialOn={false}
+      />,
+    );
+
+    expect(
+      screen.getByRole("switch", { name: "LED light" }),
+    ).not.toBeChecked();
   });
 
   it("reflects the confirmed state after toggling on", async () => {
     vi.mocked(setActuatorAction).mockResolvedValue({ on: true });
 
-    render(<ActuatorToggle path="/api/greenhouse/led" label="LED light" />);
+    render(
+      <ActuatorToggle
+        path="/api/greenhouse/led"
+        label="LED light"
+        initialOn={false}
+      />,
+    );
     screen.getByRole("switch", { name: "LED light" }).click();
 
     await waitFor(() =>
@@ -37,7 +62,13 @@ describe("ActuatorToggle", () => {
       .mockResolvedValueOnce({ on: false })
       .mockResolvedValueOnce({ on: true });
 
-    render(<ActuatorToggle path="/api/greenhouse/led" label="LED light" />);
+    render(
+      <ActuatorToggle
+        path="/api/greenhouse/led"
+        label="LED light"
+        initialOn={false}
+      />,
+    );
     const ledSwitch = screen.getByRole("switch", { name: "LED light" });
 
     ledSwitch.click();
@@ -70,7 +101,9 @@ describe("ActuatorToggle", () => {
       error: "device unreachable",
     });
 
-    render(<ActuatorToggle path="/api/greenhouse/fan" label="Fan" />);
+    render(
+      <ActuatorToggle path="/api/greenhouse/fan" label="Fan" initialOn={false} />,
+    );
     screen.getByRole("switch", { name: "Fan" }).click();
 
     await waitFor(() =>

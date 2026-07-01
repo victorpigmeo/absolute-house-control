@@ -20,7 +20,7 @@ Persist the last-known state of the greenhouse's LED, fan, and water pump to the
 - [ ] Starting the water pump creates a new activation record with status `PENDING`, a recorded start time, and the requested duration, before the start command is sent to the device.
 - [ ] After the pump's auto-off command runs successfully, the corresponding activation record's status is updated to `COMPLETED`.
 - [ ] If the service restarts or crashes before the auto-off command runs, the activation record's status remains `PENDING`.
-- [ ] Loading the greenhouse dashboard page displays the LED and fan states as currently persisted in the database, not just state from commands sent during the current browser session.
+- [x] Loading the greenhouse dashboard page displays the LED and fan states as currently persisted in the database, not just state from commands sent during the current browser session.
 
 ## User Stories
 - [US1: Persist the LED's state](us-1-persist-led-state.md)

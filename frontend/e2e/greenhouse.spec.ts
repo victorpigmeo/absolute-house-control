@@ -5,18 +5,35 @@ async function callCounts(request: import("@playwright/test").APIRequestContext)
   return response.json();
 }
 
+async function seedState(
+  request: import("@playwright/test").APIRequestContext,
+  state: { led?: boolean; fan?: boolean },
+) {
+  await request.post("http://localhost:4010/__state", { data: state });
+}
+
 // Serialized: tests share the mock server's call counters, and the
 // invalid-duration test asserts on a before/after delta for one of them.
 test.describe.serial("greenhouse controls", () => {
+  test("dashboard reflects state persisted from outside the current session", async ({
+    page,
+    request,
+  }) => {
+    await seedState(request, { led: true, fan: true });
+    await page.goto("/greenhouse");
+
+    await expect(page.getByRole("switch", { name: "LED light" })).toBeChecked();
+    await expect(page.getByRole("switch", { name: "Fan" })).toBeChecked();
+
+    // Reset so the following tests' toggle-click sequences start from off.
+    await seedState(request, { led: false, fan: false });
+  });
+
   test("toggling the LED reflects the confirmed on/off state", async ({
     page,
   }) => {
     await page.goto("/greenhouse");
     const ledSwitch = page.getByRole("switch", { name: "LED light" });
-
-    await expect(
-      page.getByText("State unknown until toggled").first(),
-    ).toBeVisible();
 
     await ledSwitch.click();
     await expect(ledSwitch).toBeChecked();
