@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 
 const PORT = 4010;
 const calls = { led: 0, fan: 0, pump: 0 };
+const state = { led: false, fan: false };
 
 function readJsonBody(req) {
   return new Promise((resolve, reject) => {
@@ -29,9 +30,22 @@ const server = createServer(async (req, res) => {
       return;
     }
 
+    if (req.method === "POST" && req.url === "/__state") {
+      const body = await readJsonBody(req);
+      Object.assign(state, body);
+      sendJson(res, 200, state);
+      return;
+    }
+
+    if (req.method === "GET" && req.url === "/api/greenhouse/state") {
+      sendJson(res, 200, state);
+      return;
+    }
+
     if (req.method === "POST" && req.url === "/api/greenhouse/led") {
       calls.led++;
       const { on } = await readJsonBody(req);
+      state.led = on;
       sendJson(res, 200, { on });
       return;
     }
@@ -39,6 +53,7 @@ const server = createServer(async (req, res) => {
     if (req.method === "POST" && req.url === "/api/greenhouse/fan") {
       calls.fan++;
       const { on } = await readJsonBody(req);
+      state.fan = on;
       sendJson(res, 200, { on });
       return;
     }
